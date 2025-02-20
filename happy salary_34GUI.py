@@ -14,15 +14,26 @@ def calculate_bonus():
         else:
             bonus = salary * 0.15
 
-        messagebox.showinfo("ผลลัพธ์", f"จำนวนเงินโบนัส: {bonus:.2f} บาท")
+        # แปลงโบนัสให้มีเครื่องหมาย , (comma) คั่นหลักพัน
+        bonus_formatted = f"{bonus:,.2f}"
+        
+        messagebox.showinfo("ผลลัพธ์", f"จำนวนเงินโบนัส: {bonus_formatted} บาท")
+        
+        # เรียกใช้ฟังก์ชันเคลียร์ค่า
+        clear_fields()
 
     except ValueError:
         messagebox.showerror("ข้อผิดพลาด", "กรุณากรอกตัวเลขที่ถูกต้อง")
 
+# ฟังก์ชันเคลียร์ช่องกรอกข้อมูล
+def clear_fields():
+    entry_salary.delete(0, tk.END)
+    entry_years.delete(0, tk.END)
+
 # สร้างหน้าต่างหลัก
 root = tk.Tk()
 root.title("โปรแกรมคำนวณโบนัส")
-root.geometry("300x200")
+root.geometry("300x250")
 
 # สร้าง Label และ Entry สำหรับกรอกเงินเดือน
 tk.Label(root, text="เงินเดือน:").pack(pady=5)
@@ -37,6 +48,10 @@ entry_years.pack(pady=5)
 # ปุ่มคำนวณโบนัส
 btn_calculate = tk.Button(root, text="คำนวณโบนัส", command=calculate_bonus)
 btn_calculate.pack(pady=10)
+
+# ปุ่มเคลียร์ค่า
+btn_clear = tk.Button(root, text="เคลียร์", command=clear_fields)
+btn_clear.pack(pady=5)
 
 # เริ่มต้นโปรแกรม
 root.mainloop()
